@@ -1,7 +1,0 @@
-discord.py
-fortnite-replay-parser
-python-dotenv
-requests
-fastapi
-uvicorn
-python-multipart
