@@ -21,3 +21,25 @@
   <script src="app.js"></script>
 </body>
 </html>
+<div class="tabs">
+  <button onclick="showTab('upload')">Upload</button>
+  <button onclick="showTab('leaderboard')">Leaderboard</button>
+</div>
+
+<div id="upload" class="tab">
+  <!-- your existing upload UI -->
+</div>
+
+<div id="leaderboard" class="tab" style="display:none;">
+  <h2>🏆 Furthest Kill Leaderboard</h2>
+  <table id="leaderboard-table">
+    <thead>
+      <tr>
+        <th>Distance (m)</th>
+        <th>Player</th>
+        <th>Weapon</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
