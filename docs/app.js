@@ -1,10 +1,15 @@
 const parseBtn = document.getElementById("parseBtn");
 const fileInput = document.getElementById("fileInput");
+
 const results = document.getElementById("results");
 const leaderboardDiv = document.getElementById("leaderboard");
+const uploadTab = document.getElementById("upload");
 
 const API_BASE = "https://kye5-replay-bot.onrender.com";
 
+// --------------------
+// Upload & Parse
+// --------------------
 parseBtn.addEventListener("click", async () => {
   if (!fileInput.files.length) {
     alert("Please select a replay file");
@@ -28,13 +33,18 @@ parseBtn.addEventListener("click", async () => {
 
     const parsed = JSON.parse(data.output);
     renderResults(parsed);
-    loadLeaderboard();
+
+    // refresh leaderboard after upload
+    await loadLeaderboard();
 
   } catch (err) {
     results.innerHTML = `<div class="card">❌ Error: ${err.message}</div>`;
   }
 });
 
+// --------------------
+// Results Rendering
+// --------------------
 function renderResults(data) {
   results.innerHTML = "";
 
@@ -70,35 +80,51 @@ function row(label, value) {
   `;
 }
 
-// ---- Leaderboard ----
+// --------------------
+// Leaderboard
+// --------------------
 async function loadLeaderboard() {
   const res = await fetch(`${API_BASE}/leaderboard`);
   const data = await res.json();
 
   leaderboardDiv.innerHTML = `
     <table>
-      <tr>
-        <th>#</th>
-        <th>Distance (m)</th>
-        <th>Player</th>
-        <th>Weapon</th>
-      </tr>
-      ${data.leaderboard.map((e, i) => `
+      <thead>
         <tr>
-          <td>${i + 1}</td>
-          <td>${e.distance}</td>
-          <td>${e.player}</td>
-          <td>${e.weapon}</td>
+          <th>#</th>
+          <th>Distance (m)</th>
+          <th>Player</th>
+          <th>Weapon</th>
         </tr>
-      `).join("")}
+      </thead>
+      <tbody>
+        ${data.leaderboard.map((e, i) => `
+          <tr>
+            <td>${i + 1}</td>
+            <td>${e.distance}</td>
+            <td>${e.player}</td>
+            <td>${e.weapon}</td>
+          </tr>
+        `).join("")}
+      </tbody>
     </table>
   `;
 }
 
-// ---- Tabs ----
+// --------------------
+// Tabs
+// --------------------
 function showTab(tab) {
-  results.style.display = tab === "results" ? "block" : "none";
-  leaderboardDiv.style.display = tab === "leaderboard" ? "block" : "none";
+  uploadTab.classList.remove("active");
+  results.classList.remove("active");
+  leaderboardDiv.classList.remove("active");
+
+  if (tab === "upload") uploadTab.classList.add("active");
+  if (tab === "results") results.classList.add("active");
+  if (tab === "leaderboard") {
+    leaderboardDiv.classList.add("active");
+    loadLeaderboard();
+  }
 }
 
 window.showTab = showTab;
