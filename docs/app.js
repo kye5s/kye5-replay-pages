@@ -7,9 +7,9 @@ const leaderboardDiv = document.getElementById("leaderboard");
 
 const API_BASE = "https://kye5-replay-bot.onrender.com";
 
-// --------------------
+// ====================
 // Upload & Parse
-// --------------------
+// ====================
 parseBtn.addEventListener("click", async () => {
   if (!fileInput.files.length) {
     alert("Please select a replay file");
@@ -33,17 +33,16 @@ parseBtn.addEventListener("click", async () => {
 
     const parsed = JSON.parse(data.output);
     renderResults(parsed);
-
-    await loadLeaderboard();
+    loadLeaderboard();
 
   } catch (err) {
     results.innerHTML = `<div class="card">❌ Error: ${err.message}</div>`;
   }
 });
 
-// --------------------
+// ====================
 // Results Rendering
-// --------------------
+// ====================
 function renderResults(data) {
   results.innerHTML = "";
 
@@ -62,9 +61,19 @@ function createResultCard(title, stats) {
 
   card.innerHTML = `
     <h2>${title}</h2>
+
     ${row("Distance", `${stats.distance} m`)}
-    ${row("Killer", stats.killer)}
-    ${row("Victim", stats.victim)}
+
+    ${row(
+      "Killer",
+      `${stats.killer} (${stats.killer_platform ?? "Unknown"})`
+    )}
+
+    ${row(
+      "Victim",
+      `${stats.victim} (${stats.victim_platform ?? "Unknown"})`
+    )}
+
     ${row("Weapon", stats.weapon)}
     ${row("Rarity", stats.rarity)}
   `;
@@ -81,9 +90,9 @@ function row(label, value) {
   `;
 }
 
-// --------------------
+// ====================
 // Leaderboard
-// --------------------
+// ====================
 async function loadLeaderboard() {
   const res = await fetch(`${API_BASE}/leaderboard`);
   const data = await res.json();
@@ -112,9 +121,9 @@ async function loadLeaderboard() {
   `;
 }
 
-// --------------------
+// ====================
 // Tabs
-// --------------------
+// ====================
 function showTab(tab) {
   uploadTab.classList.remove("active");
   results.classList.remove("active");
