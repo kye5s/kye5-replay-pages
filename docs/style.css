@@ -87,3 +87,20 @@ button:hover {
 .label {
   color: #94a3b8;
 }
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #444;
+}
+
+th {
+  text-align: left;
+}
+
+.tabs button {
+  margin-right: 10px;
+}
