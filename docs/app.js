@@ -1,9 +1,9 @@
 const parseBtn = document.getElementById("parseBtn");
 const fileInput = document.getElementById("fileInput");
 
+const uploadTab = document.getElementById("upload");
 const results = document.getElementById("results");
 const leaderboardDiv = document.getElementById("leaderboard");
-const uploadTab = document.getElementById("upload");
 
 const API_BASE = "https://kye5-replay-bot.onrender.com";
 
@@ -34,7 +34,6 @@ parseBtn.addEventListener("click", async () => {
     const parsed = JSON.parse(data.output);
     renderResults(parsed);
 
-    // refresh leaderboard after upload
     await loadLeaderboard();
 
   } catch (err) {
@@ -49,23 +48,25 @@ function renderResults(data) {
   results.innerHTML = "";
 
   if (data.furthest) {
-    results.appendChild(createCard("🏹 Furthest Kill", data.furthest));
+    results.appendChild(createResultCard("🏹 Furthest Kill", data.furthest));
   }
 
   if (data.final) {
-    results.appendChild(createCard("🏁 Final Kill", data.final));
+    results.appendChild(createResultCard("🏁 Final Kill", data.final));
   }
 }
 
-function createCard(title, stats) {
+function createResultCard(title, stats) {
   const card = document.createElement("div");
   card.className = "card";
 
   card.innerHTML = `
     <h2>${title}</h2>
     ${row("Distance", `${stats.distance} m`)}
-    ${row("Player", stats.killer)}
+    ${row("Killer", stats.killer)}
+    ${row("Victim", stats.victim)}
     ${row("Weapon", stats.weapon)}
+    ${row("Rarity", stats.rarity)}
   `;
 
   return card;
