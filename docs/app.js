@@ -8,7 +8,7 @@ parseBtn.addEventListener("click", async () => {
     return;
   }
 
-  results.innerHTML = "<div class='card'>⏳ Parsing replay...</div>";
+  results.innerHTML = "<div class='card'>⏳ Processing replay...</div>";
 
   const formData = new FormData();
   formData.append("file", fileInput.files[0]);
@@ -22,7 +22,7 @@ parseBtn.addEventListener("click", async () => {
     const data = await res.json();
 
     if (!data.success) {
-      throw new Error("Parser failed");
+      throw new Error("Processing failed");
     }
 
     const parsed = JSON.parse(data.output);
@@ -37,11 +37,11 @@ function renderResults(data) {
   results.innerHTML = "";
 
   if (data.furthest) {
-    results.appendChild(createCard("🏹 Furthest Snipe", data.furthest));
+    results.appendChild(createCard("🏹 Furthest Kill", data.furthest));
   }
 
   if (data.final) {
-    results.appendChild(createCard("🏁 Final Elimination", data.final));
+    results.appendChild(createCard("🏁 Final Kill", data.final));
   }
 }
 
@@ -52,10 +52,10 @@ function createCard(title, stats) {
   card.innerHTML = `
     <h2>${title}</h2>
     ${row("Distance", `${stats.distance} m`)}
-    ${row("Weapon", stats.weapon)}
-    ${row("Rarity", stats.rarity)}
     ${row("Killer", `${stats.killer} (${stats.killer_platform})`)}
     ${row("Victim", `${stats.victim} (${stats.victim_platform})`)}
+    ${row("Weapon", stats.weapon)}
+    ${row("Rarity", stats.rarity)}
   `;
 
   return card;
