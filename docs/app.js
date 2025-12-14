@@ -1,4 +1,4 @@
-const API_URL = "https://kye5-replay.onrender.com/parse-replay";
+const API_URL = "https://kye5-replay-bot.onrender.com";
 
 async function uploadReplay() {
   const fileInput = document.getElementById("replayFile");
