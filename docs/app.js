@@ -15,7 +15,7 @@ async function uploadReplay() {
   output.textContent = "Processing replay...";
 
   try {
-    const response = await fetch(API_URL, {
+    const response = await fetch("https://kye5-replay-bot.onrender.com/parse-replay", {
       method: "POST",
       body: formData
     });
