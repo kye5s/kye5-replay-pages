@@ -1,6 +1,9 @@
 const parseBtn = document.getElementById("parseBtn");
 const fileInput = document.getElementById("fileInput");
 const results = document.getElementById("results");
+const leaderboardDiv = document.getElementById("leaderboard");
+
+const API_BASE = "https://kye5-replay-bot.onrender.com";
 
 parseBtn.addEventListener("click", async () => {
   if (!fileInput.files.length) {
@@ -8,25 +11,24 @@ parseBtn.addEventListener("click", async () => {
     return;
   }
 
+  showTab("results");
   results.innerHTML = "<div class='card'>⏳ Processing replay...</div>";
 
   const formData = new FormData();
   formData.append("file", fileInput.files[0]);
 
   try {
-    const res = await fetch(
-      "https://kye5-replay-bot.onrender.com/parse-replay",
-      { method: "POST", body: formData }
-    );
+    const res = await fetch(`${API_BASE}/parse-replay`, {
+      method: "POST",
+      body: formData,
+    });
 
     const data = await res.json();
-
-    if (!data.success) {
-      throw new Error("Processing failed");
-    }
+    if (!data.success) throw new Error("Processing failed");
 
     const parsed = JSON.parse(data.output);
     renderResults(parsed);
+    loadLeaderboard();
 
   } catch (err) {
     results.innerHTML = `<div class="card">❌ Error: ${err.message}</div>`;
@@ -52,10 +54,8 @@ function createCard(title, stats) {
   card.innerHTML = `
     <h2>${title}</h2>
     ${row("Distance", `${stats.distance} m`)}
-    ${row("Killer", `${stats.killer} (${stats.killer_platform})`)}
-    ${row("Victim", `${stats.victim} (${stats.victim_platform})`)}
+    ${row("Player", stats.killer)}
     ${row("Weapon", stats.weapon)}
-    ${row("Rarity", stats.rarity)}
   `;
 
   return card;
@@ -69,3 +69,36 @@ function row(label, value) {
     </div>
   `;
 }
+
+// ---- Leaderboard ----
+async function loadLeaderboard() {
+  const res = await fetch(`${API_BASE}/leaderboard`);
+  const data = await res.json();
+
+  leaderboardDiv.innerHTML = `
+    <table>
+      <tr>
+        <th>#</th>
+        <th>Distance (m)</th>
+        <th>Player</th>
+        <th>Weapon</th>
+      </tr>
+      ${data.leaderboard.map((e, i) => `
+        <tr>
+          <td>${i + 1}</td>
+          <td>${e.distance}</td>
+          <td>${e.player}</td>
+          <td>${e.weapon}</td>
+        </tr>
+      `).join("")}
+    </table>
+  `;
+}
+
+// ---- Tabs ----
+function showTab(tab) {
+  results.style.display = tab === "results" ? "block" : "none";
+  leaderboardDiv.style.display = tab === "leaderboard" ? "block" : "none";
+}
+
+window.showTab = showTab;
