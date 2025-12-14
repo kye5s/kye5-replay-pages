@@ -1,33 +1,71 @@
-const API_URL = "https://kye5-replay-bot.onrender.com";
+const parseBtn = document.getElementById("parseBtn");
+const fileInput = document.getElementById("fileInput");
+const results = document.getElementById("results");
 
-async function uploadReplay() {
-  const fileInput = document.getElementById("replayFile");
-  const output = document.getElementById("output");
-
+parseBtn.addEventListener("click", async () => {
   if (!fileInput.files.length) {
-    alert("Select a replay file first.");
+    alert("Please select a replay file");
     return;
   }
+
+  results.innerHTML = "<div class='card'>⏳ Parsing replay...</div>";
 
   const formData = new FormData();
   formData.append("file", fileInput.files[0]);
 
-  output.textContent = "Processing replay...";
-
   try {
-    const response = await fetch("https://kye5-replay-bot.onrender.com/parse-replay", {
-      method: "POST",
-      body: formData
-    });
+    const res = await fetch(
+      "https://kye5-replay-bot.onrender.com/parse-replay",
+      { method: "POST", body: formData }
+    );
 
-    if (!response.ok) {
-      const text = await response.text();
-      throw new Error(text);
+    const data = await res.json();
+
+    if (!data.success) {
+      throw new Error("Parser failed");
     }
 
-    const data = await response.json();
-    output.textContent = JSON.stringify(data, null, 2);
+    const parsed = JSON.parse(data.output);
+    renderResults(parsed);
+
   } catch (err) {
-    output.textContent = "Error:\n" + err.message;
+    results.innerHTML = `<div class="card">❌ Error: ${err.message}</div>`;
   }
+});
+
+function renderResults(data) {
+  results.innerHTML = "";
+
+  if (data.furthest) {
+    results.appendChild(createCard("🏹 Furthest Snipe", data.furthest));
+  }
+
+  if (data.final) {
+    results.appendChild(createCard("🏁 Final Elimination", data.final));
+  }
+}
+
+function createCard(title, stats) {
+  const card = document.createElement("div");
+  card.className = "card";
+
+  card.innerHTML = `
+    <h2>${title}</h2>
+    ${row("Distance", `${stats.distance} m`)}
+    ${row("Weapon", stats.weapon)}
+    ${row("Rarity", stats.rarity)}
+    ${row("Killer", `${stats.killer} (${stats.killer_platform})`)}
+    ${row("Victim", `${stats.victim} (${stats.victim_platform})`)}
+  `;
+
+  return card;
+}
+
+function row(label, value) {
+  return `
+    <div class="stat">
+      <span class="label">${label}</span>
+      <span>${value}</span>
+    </div>
+  `;
 }
