@@ -1,4 +1,4 @@
-const API_URL = "https://YOUR-RAILWAY-URL.up.railway.app/parse-replay";
+const API_URL = "https://kye5-replay.onrender.com/parse-replay";
 
 async function uploadReplay() {
   const fileInput = document.getElementById("replayFile");
