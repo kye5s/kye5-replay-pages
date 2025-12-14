@@ -104,3 +104,21 @@ th {
 .tabs button {
   margin-right: 10px;
 }
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.tab {
+  display: none;
+}
+
+.tab.active {
+  display: block;
+}
+
+#leaderboard table {
+  margin-top: 12px;
+}
