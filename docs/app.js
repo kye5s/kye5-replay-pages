@@ -1,15 +1,13 @@
 const parseBtn = document.getElementById("parseBtn");
 const fileInput = document.getElementById("fileInput");
-
-const uploadTab = document.getElementById("upload");
 const results = document.getElementById("results");
-const leaderboardDiv = document.querySelector(".leaderboard-container");
+
+const leaderboardTab = document.getElementById("leaderboard");
+const leaderboardBody = document.querySelector("#leaderboard-table tbody");
 
 const API_BASE = "https://kye5-replay-bot.onrender.com";
 
-// ====================
-// Upload & Parse
-// ====================
+// ---- Upload + Parse ----
 parseBtn.addEventListener("click", async () => {
   if (!fileInput.files.length) {
     alert("Please select a replay file");
@@ -33,47 +31,35 @@ parseBtn.addEventListener("click", async () => {
 
     const parsed = JSON.parse(data.output);
     renderResults(parsed);
-    loadLeaderboard();
+    await loadLeaderboard();
 
   } catch (err) {
     results.innerHTML = `<div class="card">❌ Error: ${err.message}</div>`;
   }
 });
 
-// ====================
-// Results Rendering
-// ====================
+// ---- Results Rendering ----
 function renderResults(data) {
   results.innerHTML = "";
 
   if (data.furthest) {
-    results.appendChild(createResultCard("🏹 Furthest Kill", data.furthest));
+    results.appendChild(createCard("🏹 Furthest Kill", data.furthest));
   }
 
   if (data.final) {
-    results.appendChild(createResultCard("🏁 Final Kill", data.final));
+    results.appendChild(createCard("🏁 Final Kill", data.final));
   }
 }
 
-function createResultCard(title, stats) {
+function createCard(title, stats) {
   const card = document.createElement("div");
   card.className = "card";
 
   card.innerHTML = `
     <h2>${title}</h2>
-
     ${row("Distance", `${stats.distance} m`)}
-
-    ${row(
-      "Killer",
-      `${stats.killer} (${stats.killer_platform ?? "Unknown"})`
-    )}
-
-    ${row(
-      "Victim",
-      `${stats.victim} (${stats.victim_platform ?? "Unknown"})`
-    )}
-
+    ${row("Killer", `${stats.killer} (${stats.killer_platform})`)}
+    ${row("Victim", `${stats.victim} (${stats.victim_platform})`)}
     ${row("Weapon", stats.weapon)}
     ${row("Rarity", stats.rarity)}
   `;
@@ -90,49 +76,26 @@ function row(label, value) {
   `;
 }
 
-// ====================
-// Leaderboard
-// ====================
+// ---- Leaderboard ----
 async function loadLeaderboard() {
   const res = await fetch(`${API_BASE}/leaderboard`);
   const data = await res.json();
 
-  leaderboardDiv.innerHTML = `
-    <table>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Distance (m)</th>
-          <th>Player</th>
-          <th>Weapon</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${data.leaderboard.map((e, i) => `
-          <tr>
-            <td>${i + 1}</td>
-            <td>${e.distance}</td>
-            <td>${e.player}</td>
-            <td>${e.weapon}</td>
-          </tr>
-        `).join("")}
-      </tbody>
-    </table>
-  `;
+  leaderboardBody.innerHTML = data.leaderboard.map(e => `
+    <tr>
+      <td>${e.distance}</td>
+      <td>${e.player}</td>
+      <td>${e.weapon}</td>
+    </tr>
+  `).join("");
 }
 
-// ====================
-// Tabs
-// ====================
+// ---- Tabs ----
 function showTab(tab) {
-  uploadTab.classList.remove("active");
-  results.classList.remove("active");
-  leaderboardDiv.classList.remove("active");
+  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+  document.getElementById(tab).classList.add("active");
 
-  if (tab === "upload") uploadTab.classList.add("active");
-  if (tab === "results") results.classList.add("active");
   if (tab === "leaderboard") {
-    leaderboardDiv.classList.add("active");
     loadLeaderboard();
   }
 }
