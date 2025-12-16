@@ -119,15 +119,31 @@ th {
   text-align: left;
   color: #7dd3fc;
 }
+/* Leaderboard */
 .leaderboard-container {
-  max-height: 420px;      /* ~10 rows visually */
+  max-height: 420px;      /* ~10 rows visible */
   overflow-y: auto;
   margin-top: 12px;
   border: 1px solid #1e293b;
   border-radius: 10px;
 }
 
-/* Optional: nicer scrollbar */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 14px 10px;
+  border-bottom: 1px solid #334155;
+}
+
+th {
+  text-align: left;
+  color: #7dd3fc;
+}
+
+/* Scrollbar styling */
 .leaderboard-container::-webkit-scrollbar {
   width: 8px;
 }
