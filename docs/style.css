@@ -119,3 +119,24 @@ th {
   text-align: left;
   color: #7dd3fc;
 }
+.leaderboard-container {
+  max-height: 420px;      /* ~10 rows visually */
+  overflow-y: auto;
+  margin-top: 12px;
+  border: 1px solid #1e293b;
+  border-radius: 10px;
+}
+
+/* Optional: nicer scrollbar */
+.leaderboard-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.leaderboard-container::-webkit-scrollbar-thumb {
+  background: #38bdf8;
+  border-radius: 10px;
+}
+
+.leaderboard-container::-webkit-scrollbar-track {
+  background: #020617;
+}
