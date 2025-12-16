@@ -1,13 +1,10 @@
 const parseBtn = document.getElementById("parseBtn");
 const fileInput = document.getElementById("fileInput");
 const results = document.getElementById("results");
-
-const leaderboardTab = document.getElementById("leaderboard");
-const leaderboardBody = document.querySelector("#leaderboard-table tbody");
+const leaderboardDiv = document.getElementById("leaderboard");
 
 const API_BASE = "https://kye5-replay-bot.onrender.com";
 
-// ---- Upload + Parse ----
 parseBtn.addEventListener("click", async () => {
   if (!fileInput.files.length) {
     alert("Please select a replay file");
@@ -31,14 +28,13 @@ parseBtn.addEventListener("click", async () => {
 
     const parsed = JSON.parse(data.output);
     renderResults(parsed);
-    await loadLeaderboard();
+    loadLeaderboard();
 
   } catch (err) {
     results.innerHTML = `<div class="card">❌ Error: ${err.message}</div>`;
   }
 });
 
-// ---- Results Rendering ----
 function renderResults(data) {
   results.innerHTML = "";
 
@@ -76,37 +72,53 @@ function row(label, value) {
   `;
 }
 
-// ---- Leaderboard ----
+/* ---------- Leaderboard ---------- */
 async function loadLeaderboard() {
   const res = await fetch(`${API_BASE}/leaderboard`);
   const data = await res.json();
 
-  leaderboardBody.innerHTML = data.leaderboard.map((e, i) => {
-    let rankClass = "";
-    if (i === 0) rankClass = "rank-gold";
-    else if (i === 1) rankClass = "rank-silver";
-    else if (i === 2) rankClass = "rank-bronze";
+  const rows = data.leaderboard.map((e, i) => {
+    let rankDisplay = i + 1;
+
+    if (i === 0) rankDisplay = "🥇";
+    else if (i === 1) rankDisplay = "🥈";
+    else if (i === 2) rankDisplay = "🥉";
 
     return `
-      <tr class="${rankClass}">
-        <td class="rank">${i + 1}</td>
+      <tr class="rank-${i + 1}">
+        <td class="rank">${rankDisplay}</td>
         <td>${e.distance}</td>
         <td>${e.player}</td>
         <td>${e.weapon}</td>
       </tr>
     `;
   }).join("");
+
+  leaderboardDiv.innerHTML = `
+    <h2>🏆 Furthest Kill Leaderboard</h2>
+    <div class="leaderboard-container">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Distance (m)</th>
+            <th>Player</th>
+            <th>Weapon</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+  `;
 }
 
-
-// ---- Tabs ----
+/* ---------- Tabs ---------- */
 function showTab(tab) {
-  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-  document.getElementById(tab).classList.add("active");
+  document.getElementById("upload").classList.toggle("active", tab === "upload");
+  document.getElementById("leaderboard").classList.toggle("active", tab === "leaderboard");
+  results.classList.toggle("active", tab === "results");
 
-  if (tab === "leaderboard") {
-    loadLeaderboard();
-  }
+  if (tab === "leaderboard") loadLeaderboard();
 }
 
 window.showTab = showTab;
