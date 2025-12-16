@@ -32,18 +32,24 @@
 
     <!-- Results tab -->
     <div id="results" class="tab"></div>
-
     <!-- Leaderboard tab -->
     <div id="leaderboard" class="tab">
       <h2>🏆 Furthest Kill Leaderboard</h2>
-
-      <!-- SCROLL CONTAINER -->
+    
       <div class="leaderboard-container">
-        <!-- JS injects the table here -->
+        <table id="leaderboard-table">
+          <thead>
+            <tr>
+              <th>Distance (m)</th>
+              <th>Player</th>
+              <th>Weapon</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
       </div>
     </div>
-  </div>
-
+    
   <script src="app.js"></script>
 </body>
 </html>
