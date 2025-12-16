@@ -160,3 +160,9 @@ th {
 .leaderboard-container::-webkit-scrollbar-track {
   background: #020617;
 }
+/* Bold text for Top 3 leaderboard entries */
+.rank-1 td,
+.rank-2 td,
+.rank-3 td {
+  font-weight: 700;
+}
