@@ -156,3 +156,32 @@ th {
 .leaderboard-container::-webkit-scrollbar-track {
   background: #020617;
 }
+/* Rank column */
+.rank {
+  font-weight: 800;
+  text-align: center;
+}
+
+/* Top 3 styling */
+.rank-gold {
+  background: linear-gradient(90deg, rgba(234,179,8,0.15), transparent);
+}
+
+.rank-silver {
+  background: linear-gradient(90deg, rgba(148,163,184,0.15), transparent);
+}
+
+.rank-bronze {
+  background: linear-gradient(90deg, rgba(202,138,4,0.18), transparent);
+}
+
+/* Optional: emoji flair */
+.rank-gold .rank::after {
+  content: " 🥇";
+}
+.rank-silver .rank::after {
+  content: " 🥈";
+}
+.rank-bronze .rank::after {
+  content: " 🥉";
+}
