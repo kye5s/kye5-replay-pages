@@ -160,9 +160,49 @@ th {
 .leaderboard-container::-webkit-scrollbar-track {
   background: #020617;
 }
+
 /* Bold text for Top 3 leaderboard entries */
 .rank-1 td,
 .rank-2 td,
 .rank-3 td {
   font-weight: 700;
+}
+
+/* ---------- Replay Location Helper (Patch 2) ---------- */
+
+.replay-help {
+  margin-top: 24px;
+  padding: 16px;
+  background: rgba(2, 6, 23, 0.7);
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  font-size: 0.9rem;
+}
+
+.replay-help h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  color: #7dd3fc;
+}
+
+.replay-help p {
+  margin: 6px 0;
+  color: #cbd5f5;
+}
+
+.replay-help code {
+  display: block;
+  margin: 10px 0;
+  padding: 10px;
+  background: #020617;
+  border-radius: 8px;
+  border: 1px solid #334155;
+  font-family: monospace;
+  color: #38bdf8;
+  word-break: break-all;
+}
+
+.replay-help .hint {
+  font-size: 0.85rem;
+  color: #94a3b8;
 }
