@@ -81,14 +81,23 @@ async function loadLeaderboard() {
   const res = await fetch(`${API_BASE}/leaderboard`);
   const data = await res.json();
 
-  leaderboardBody.innerHTML = data.leaderboard.map(e => `
-    <tr>
-      <td>${e.distance}</td>
-      <td>${e.player}</td>
-      <td>${e.weapon}</td>
-    </tr>
-  `).join("");
+  leaderboardBody.innerHTML = data.leaderboard.map((e, i) => {
+    let rankClass = "";
+    if (i === 0) rankClass = "rank-gold";
+    else if (i === 1) rankClass = "rank-silver";
+    else if (i === 2) rankClass = "rank-bronze";
+
+    return `
+      <tr class="${rankClass}">
+        <td class="rank">${i + 1}</td>
+        <td>${e.distance}</td>
+        <td>${e.player}</td>
+        <td>${e.weapon}</td>
+      </tr>
+    `;
+  }).join("");
 }
+
 
 // ---- Tabs ----
 function showTab(tab) {
