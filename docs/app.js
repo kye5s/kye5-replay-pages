@@ -3,7 +3,7 @@ const fileInput = document.getElementById("fileInput");
 
 const uploadTab = document.getElementById("upload");
 const results = document.getElementById("results");
-const leaderboardDiv = document.getElementById("leaderboard");
+const leaderboardDiv = document.querySelector(".leaderboard-container");
 
 const API_BASE = "https://kye5-replay-bot.onrender.com";
 
