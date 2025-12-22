@@ -9,12 +9,11 @@ body {
   background: radial-gradient(circle at top, #1e293b, #020617);
   color: #e5e7eb;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-/* 🔹 MAIN CONTAINER */
+/* Container */
 .container {
   width: 100%;
   max-width: 760px;
@@ -31,6 +30,7 @@ h1 {
   margin-bottom: 26px;
 }
 
+/* Upload */
 .upload {
   display: flex;
   flex-direction: column;
@@ -60,6 +60,7 @@ button:hover {
   filter: brightness(1.1);
 }
 
+/* Tabs */
 .tabs {
   display: flex;
   justify-content: center;
@@ -75,8 +76,38 @@ button:hover {
   display: block;
 }
 
-/* ---------- Leaderboard ---------- */
+/* Results */
+.results {
+  margin-top: 28px;
+  display: grid;
+  gap: 24px;
+}
 
+.card {
+  background: #020617;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid #1e293b;
+}
+
+.card h2 {
+  margin: 0 0 16px;
+  font-size: 1.2rem;
+  color: #38bdf8;
+}
+
+.stat {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 1rem;
+}
+
+.label {
+  color: #94a3b8;
+}
+
+/* Leaderboard */
 .leaderboard-container {
   max-height: 460px;
   overflow-y: auto;
@@ -101,6 +132,7 @@ th {
   font-weight: 600;
 }
 
+/* Ranking */
 .rank {
   font-weight: 700;
   width: 48px;
@@ -109,11 +141,9 @@ th {
 .rank-1 {
   background: linear-gradient(90deg, #b89f00, transparent);
 }
-
 .rank-2 {
   background: linear-gradient(90deg, #2f3440, transparent);
 }
-
 .rank-3 {
   background: linear-gradient(90deg, #3a2416, transparent);
 }
@@ -124,44 +154,52 @@ th {
   font-weight: 700;
 }
 
-/* ---------- Replay Help Box ---------- */
+/* Scrollbar */
+.leaderboard-container::-webkit-scrollbar {
+  width: 8px;
+}
+.leaderboard-container::-webkit-scrollbar-thumb {
+  background: #38bdf8;
+  border-radius: 10px;
+}
+.leaderboard-container::-webkit-scrollbar-track {
+  background: #020617;
+}
 
+/* Replay Path Helper */
 .replay-help {
-  width: 100%;
-  max-width: 760px;
-  margin-top: 20px;
-  padding: 20px;
-  background: #020617cc;
-  border-radius: 16px;
+  margin-top: 24px;
+  padding: 16px;
+  background: rgba(2, 6, 23, 0.7);
   border: 1px solid #1e293b;
-  box-shadow: 0 0 30px rgba(0,0,0,0.5);
-
-  display: none;
+  border-radius: 12px;
+  font-size: 0.9rem;
 }
 
 .replay-help h3 {
-  margin-top: 0;
-  margin-bottom: 12px;
-  color: #38bdf8;
+  margin: 0 0 8px;
+  font-size: 1rem;
+  color: #7dd3fc;
 }
 
 .replay-help p {
-  margin: 8px 0;
-  line-height: 1.5;
+  margin: 6px 0;
+  color: #cbd5f5;
 }
 
 .replay-help code {
   display: block;
-  margin: 12px 0;
-  padding: 10px 12px;
+  margin: 10px 0;
+  padding: 10px;
   background: #020617;
-  border: 1px solid #334155;
   border-radius: 8px;
+  border: 1px solid #334155;
   font-family: monospace;
-  color: #7dd3fc;
+  color: #38bdf8;
+  word-break: break-all;
 }
 
 .replay-help .hint {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #94a3b8;
 }
