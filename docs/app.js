@@ -1,8 +1,6 @@
 const parseBtn = document.getElementById("parseBtn");
 const fileInput = document.getElementById("fileInput");
 const results = document.getElementById("results");
-const leaderboardDiv = document.getElementById("leaderboard");
-const replayHelp = document.getElementById("replay-help");
 
 const API_BASE = "https://kye5-replay-bot.onrender.com";
 
@@ -73,52 +71,35 @@ function row(label, value) {
   `;
 }
 
-/* ---------- Leaderboard ---------- */
+/* Leaderboard */
 async function loadLeaderboard() {
   const res = await fetch(`${API_BASE}/leaderboard`);
   const data = await res.json();
 
-  const rows = data.leaderboard.map((e, i) => {
-    let rankDisplay = i + 1;
-    if (i === 0) rankDisplay = "🥇";
-    else if (i === 1) rankDisplay = "🥈";
-    else if (i === 2) rankDisplay = "🥉";
+  const tbody = document.querySelector("#leaderboard-table tbody");
+
+  tbody.innerHTML = data.leaderboard.map((e, i) => {
+    let rank = i + 1;
+    if (i === 0) rank = "🥇";
+    else if (i === 1) rank = "🥈";
+    else if (i === 2) rank = "🥉";
 
     return `
       <tr class="rank-${i + 1}">
-        <td class="rank">${rankDisplay}</td>
+        <td class="rank">${rank}</td>
         <td>${e.distance}</td>
         <td>${e.player}</td>
         <td>${e.weapon}</td>
       </tr>
     `;
   }).join("");
-
-  leaderboardDiv.innerHTML = `
-    <h2>🏆 Furthest Kill Leaderboard</h2>
-    <div class="leaderboard-container">
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Distance (m)</th>
-            <th>Player</th>
-            <th>Weapon</th>
-          </tr>
-        </thead>
-        <tbody>${rows}</tbody>
-      </table>
-    </div>
-  `;
 }
 
-/* ---------- Tabs ---------- */
+/* Tabs */
 function showTab(tab) {
   document.getElementById("upload").classList.toggle("active", tab === "upload");
   document.getElementById("leaderboard").classList.toggle("active", tab === "leaderboard");
   results.classList.toggle("active", tab === "results");
-
-  replayHelp.style.display = tab === "upload" ? "block" : "none";
 
   if (tab === "leaderboard") loadLeaderboard();
 }
