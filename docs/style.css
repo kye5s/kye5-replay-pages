@@ -9,14 +9,15 @@ body {
   background: radial-gradient(circle at top, #1e293b, #020617);
   color: #e5e7eb;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-/* 🔹 WIDER CONTAINER */
+/* 🔹 MAIN CONTAINER */
 .container {
   width: 100%;
-  max-width: 760px; /* was 560px */
+  max-width: 760px;
   background: #020617cc;
   border-radius: 18px;
   padding: 36px;
@@ -74,36 +75,6 @@ button:hover {
   display: block;
 }
 
-.results {
-  margin-top: 28px;
-  display: grid;
-  gap: 24px;
-}
-
-.card {
-  background: #020617;
-  border-radius: 16px;
-  padding: 20px;
-  border: 1px solid #1e293b;
-}
-
-.card h2 {
-  margin: 0 0 16px;
-  font-size: 1.2rem;
-  color: #38bdf8;
-}
-
-.stat {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 0;
-  font-size: 1rem;
-}
-
-.label {
-  color: #94a3b8;
-}
-
 /* ---------- Leaderboard ---------- */
 
 .leaderboard-container {
@@ -130,79 +101,67 @@ th {
   font-weight: 600;
 }
 
-/* Ranking styles */
 .rank {
   font-weight: 700;
   width: 48px;
 }
 
-/* Top 3 highlight rows */
 .rank-1 {
   background: linear-gradient(90deg, #b89f00, transparent);
 }
+
 .rank-2 {
   background: linear-gradient(90deg, #2f3440, transparent);
 }
+
 .rank-3 {
   background: linear-gradient(90deg, #3a2416, transparent);
 }
 
-/* Scrollbar */
-.leaderboard-container::-webkit-scrollbar {
-  width: 8px;
-}
-
-.leaderboard-container::-webkit-scrollbar-thumb {
-  background: #38bdf8;
-  border-radius: 10px;
-}
-
-.leaderboard-container::-webkit-scrollbar-track {
-  background: #020617;
-}
-
-/* Bold text for Top 3 leaderboard entries */
 .rank-1 td,
 .rank-2 td,
 .rank-3 td {
   font-weight: 700;
 }
 
-/* ---------- Replay Location Helper (Patch 2) ---------- */
+/* ---------- Replay Help Box ---------- */
 
 .replay-help {
-  margin-top: 24px;
-  padding: 16px;
-  background: rgba(2, 6, 23, 0.7);
+  width: 100%;
+  max-width: 760px;
+  margin-top: 20px;
+  padding: 20px;
+  background: #020617cc;
+  border-radius: 16px;
   border: 1px solid #1e293b;
-  border-radius: 12px;
-  font-size: 0.9rem;
+  box-shadow: 0 0 30px rgba(0,0,0,0.5);
+
+  display: none;
 }
 
 .replay-help h3 {
-  margin: 0 0 8px;
-  font-size: 1rem;
-  color: #7dd3fc;
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: #38bdf8;
 }
 
 .replay-help p {
-  margin: 6px 0;
-  color: #cbd5f5;
+  margin: 8px 0;
+  line-height: 1.5;
 }
 
 .replay-help code {
   display: block;
-  margin: 10px 0;
-  padding: 10px;
+  margin: 12px 0;
+  padding: 10px 12px;
   background: #020617;
-  border-radius: 8px;
   border: 1px solid #334155;
+  border-radius: 8px;
   font-family: monospace;
-  color: #38bdf8;
-  word-break: break-all;
+  color: #7dd3fc;
 }
 
 .replay-help .hint {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: #94a3b8;
 }
