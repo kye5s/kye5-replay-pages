@@ -13,6 +13,7 @@
 </head>
 <body>
 
+  <!-- MAIN APP CONTAINER -->
   <div class="container">
     <h1>🎯 kye5's Replay Checker</h1>
 
@@ -29,28 +30,14 @@
         <button id="parseBtn">Analyze Replay</button>
       </div>
     </div>
-    <div class="replay-help">
-      <h3>📁 Where to find your Fortnite replays</h3>
-      <p>
-        Fortnite saves replay files to the following default location on Windows:
-      </p>
-      <code>
-        C:\Users\USERNAME\AppData\Local\FortniteGame\Saved\Demos
-      </code>
-      <p class="hint">
-        Replace <strong>USERNAME</strong> with your Windows username.
-        <br />
-        If you don’t see <em>AppData</em>, enable <strong>“Show hidden files”</strong>.
-      </p>
-    </div>
-
 
     <!-- Results tab -->
     <div id="results" class="tab"></div>
+
     <!-- Leaderboard tab -->
     <div id="leaderboard" class="tab">
       <h2>🏆 Furthest Kill Leaderboard</h2>
-    
+
       <div class="leaderboard-container">
         <table id="leaderboard-table">
           <thead>
@@ -61,12 +48,30 @@
               <th>Weapon</th>
             </tr>
           </thead>
-
           <tbody></tbody>
         </table>
       </div>
     </div>
-    
+  </div>
+
+  <!-- REPLAY HELP BOX (OUTSIDE MAIN CONTAINER) -->
+  <div id="replay-help" class="replay-help">
+    <h3>📁 Where to find your Fortnite replays</h3>
+
+    <p>
+      Fortnite saves replay files to the following default location on Windows:
+    </p>
+
+    <code>
+      C:\Users\USERNAME\AppData\Local\FortniteGame\Saved\Demos
+    </code>
+
+    <p class="hint">
+      Replace <strong>USERNAME</strong> with your Windows username.<br>
+      If you don’t see <em>AppData</em>, enable <strong>“Show hidden files”</strong>.
+    </p>
+  </div>
+
   <script src="app.js"></script>
 </body>
 </html>
