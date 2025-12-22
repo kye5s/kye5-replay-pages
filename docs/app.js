@@ -2,6 +2,7 @@ const parseBtn = document.getElementById("parseBtn");
 const fileInput = document.getElementById("fileInput");
 const results = document.getElementById("results");
 const leaderboardDiv = document.getElementById("leaderboard");
+const replayHelp = document.getElementById("replay-help");
 
 const API_BASE = "https://kye5-replay-bot.onrender.com";
 
@@ -79,7 +80,6 @@ async function loadLeaderboard() {
 
   const rows = data.leaderboard.map((e, i) => {
     let rankDisplay = i + 1;
-
     if (i === 0) rankDisplay = "🥇";
     else if (i === 1) rankDisplay = "🥈";
     else if (i === 2) rankDisplay = "🥉";
@@ -117,6 +117,8 @@ function showTab(tab) {
   document.getElementById("upload").classList.toggle("active", tab === "upload");
   document.getElementById("leaderboard").classList.toggle("active", tab === "leaderboard");
   results.classList.toggle("active", tab === "results");
+
+  replayHelp.style.display = tab === "upload" ? "block" : "none";
 
   if (tab === "leaderboard") loadLeaderboard();
 }
